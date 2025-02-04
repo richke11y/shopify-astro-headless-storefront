@@ -27,7 +27,11 @@ export async function getStaticPaths() {
 const collection = Astro.props.collection;
 const products = collection.products.edges.map((edge: {node: any}) => edge.node);
 
-console.log(products);
+// console.log(Astro.site);
+// console.log(Astro.url);
+// console.log(Astro.url.pathname);
+// console.log(Astro.url.origin);
+// console.log(products);
 ---
 
 <Layout>
@@ -40,7 +44,7 @@ console.log(products);
 	{products.map((product: any) => (
 
 		<li>
-			<a set:text={product.title} href=`../product/${product.handle}` title={product.title} />
+			<a set:text={product.title} href=`${Astro.url.origin}/product/${product.handle}` title={product.title} />
 		</li>
 
 	))}

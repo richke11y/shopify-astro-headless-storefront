@@ -6,7 +6,11 @@ import { getAllCollections } from '../../utils/shopify.js';
 
 const collections = await getAllCollections();
 
-console.log(collections);
+// console.log(Astro.site);
+// console.log(Astro.url);
+// console.log(Astro.url.pathname);
+// console.log(Astro.url.origin);
+// console.log(collections);
 ---
 
 <Layout>
@@ -19,7 +23,7 @@ console.log(collections);
 	{collections.map((collection: any) => (
 
 		<li>
-			<a set:text={collection.title} href=`./collections/${collection.handle}` title={collection.title} />
+			<a set:text={collection.title} href=`${Astro.url.origin}${Astro.url.pathname}/${collection.handle}` title={collection.title} />
 		</li>
 
 	))}
