@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 const collection = Astro.props.collection;
 const products = collection.products.edges.map((edge: {node: any}) => edge.node);
 
-// console.log(products);
+console.log(products);
 ---
 
 <Layout>
