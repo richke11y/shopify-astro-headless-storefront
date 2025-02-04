@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+
+import { getAllCollections } from '../../utils/shopify.js';
+
+const collections = await getAllCollections();
+
+console.log(collections);
+---
+
+<Layout>
+	
+	<Navigation />
+
+	<h1>All Collections ({collections.length})</h1>
+
+	<ul>
+	{collections.map((collection: any) => (
+
+		<li>
+			<a set:text={collection.title} href=`collections/${collection.handle}` title={collection.title} />
+		</li>
+
+	))}
+	</ul>
+
+</Layout>

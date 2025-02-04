@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+
+import { getAllProducts } from '../../utils/shopify.js';
+
+export async function getStaticPaths() {
+
+	const products = await getAllProducts();
+
+	return products.map((product: { handle: any; }) => {
+
+		return {
+			params: {
+				handle: product.handle
+			},
+			props: {
+				product: product
+			}
+		}
+
+	});
+
+};
+
+const product = Astro.props.product;
+const featuredImage = product.featuredImage;
+const variants = product.variants.nodes.map((edge: any) => edge);
+
+// console.log(product);
+// console.log(variants);
+---
+
+<Layout>
+	
+	<Navigation />
+
+	<h1 set:text={product.title} />
+
+	{featuredImage && 
+	<img src={featuredImage.url} alt={product.title} width={300} height={400} />
+	}
+
+	<p set:text={product.description} />
+
+	<form method="post" action="/cart/add" id="product-form" accept-charset="UTF-8" enctype="multipart/form-data">
+
+		<input type="hidden" name="form_type" value="product">
+		<input type="hidden" name="utf8" value="✓">
+		<input name="quantity" value="1" min="1" max="1" type="hidden" />
+
+		{variants.length > 1 ? 
+		<select>
+			{variants.map((variant: any) => (
+				<option value={variant.id}>{variant.title}</option>
+			))}
+		</select>
+		:
+		<input name="id" value={variants[0].id} type="hidden" />
+		}
+
+		<input type="submit" value="Add to Cart" />
+
+	</form>
+
+</Layout>

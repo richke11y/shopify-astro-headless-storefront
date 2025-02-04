@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+
+import { getAllCollections } from '../../utils/shopify.js';
+// import { isESMImportedImage } from 'astro/assets/utils';
+
+export async function getStaticPaths() {
+
+	const collections = await getAllCollections();
+
+	return collections.map((collection: { handle: any; }) => {
+
+		return {
+			params: { 
+				handle: collection.handle
+			},
+			props: { 
+				collection: collection
+			}
+		}
+
+	});
+
+};
+
+const collection = Astro.props.collection;
+const products = collection.products.edges.map((edge: {node: any}) => edge.node);
+
+// console.log(products);
+---
+
+<Layout>
+	
+	<Navigation />
+
+	<h1>{collection.title} ({products.length})</h1>
+
+	<ul>
+	{products.map((product: any) => (
+
+		<li>
+			<a set:text={product.title} href=`../product/${product.handle}` title={product.title} />
+		</li>
+
+	))}
+	</ul>
+
+</Layout>
