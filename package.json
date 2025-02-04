@@ -1,14 +1,17 @@
 {
-  "name": "",
+  "name": "shopify-astro-headless-storefront",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "start": "NODE_ENV=development astro dev --mode development --host",
+    "build": "NODE_ENV=development astro build --mode development",
+    "production": "astro build --mode production",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@shopify/storefront-api-client": "^1.0.4",
     "astro": "^5.1.10"
   }
 }
