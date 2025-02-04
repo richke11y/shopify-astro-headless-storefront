@@ -23,7 +23,7 @@ const collections = await getAllCollections();
 	{collections.map((collection: any) => (
 
 		<li>
-			<a set:text={collection.title} href=`${Astro.url.origin}${Astro.url.pathname}/${collection.handle}` title={collection.title} />
+			<a set:text={collection.title} href=`${Astro.url.origin}${Astro.url.pathname}${collection.handle}` title={collection.title} />
 		</li>
 
 	))}
